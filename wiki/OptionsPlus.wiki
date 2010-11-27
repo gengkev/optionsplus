@@ -1,0 +1,14 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+OptionsPlus offers more ways to customize Google Chrome.
+
+= Details =
+
+Current features
+  * Replace New Tab Page
+
+Planned features
+  * Modify opening of tabs
+  * Modify opening of bookmarks
