@@ -20,6 +20,10 @@
      I can't even read it well! :D
      Especially all the nice dropdown code! (haha) -->
 
+<!-- Note with no home: chrome-internal://(anything) always redirects
+     to chrome-internal://newtab. I even tried chrome-internal://pieisgood !
+     :D -->
+
 <!DOCTYPE html>
 <title>OptionsPlus</title>
 <meta charset="UTF-8" />
@@ -37,7 +41,7 @@ function init() {
     localStorage['newtab-url']="0chrome-internal://newtab";
   var uData=localStorage["newtab-url"].substring(1);
   var uTest=uData.substring(0,uData.indexOf("://"));
-  if (uTest=="http"||uTest=="https"||uTest=="ftp"||uTest=="file"||uTest=="chrome"||uTest=="chrome-internal") {
+  if (uTest=="http"||uTest=="https"||uTest=="ftp"||uTest=="file"||uTest=="chrome") {
     newtab.url=uData.substring(uData.indexOf("://")+3);
     newtab.dropDown.selected=uTest+"://";
     document.getElementById('newtab-prefix-text').innerHTML=uTest+"://";
@@ -80,17 +84,23 @@ function init() {
     // dr[i].addEventListener('click',eval("function() { toggleDropDown("+i+")};"),false);
   }
   newtab.dropDown.set=function(a) {
-    var b=["http://","https://","ftp://","file://","chrome://","chrome-internal://","Blank Page","New Tab Page"];
+    //displayed in the UI
+    var possible1=["http://","https://","ftp://","file://","chrome://","Blank Page","New Tab Page"];
+
+    //internal values
+    var possible2=["http://","https://","ftp://","file://","chrome://","blank.htm","chrome-internal://newtab"];
+
     if (a==7||a==8) {
       document.getElementById("newtab-url").value="";
       document.getElementById("newtab-url").style.display="none";
     }
-    if (a==7)
+    else {
+      document.getElementById("newtab-url").style.display="inline";
+    }
       
-    else if (a==8)
-      
-    newtab.dropDown.selected=b[a];
-    document.getElementById('newtab-prefix-text').innerHTML=b[a];
+    newtab.dropDown.selected=possible2[a];
+    document.getElementById('newtab-prefix-text').innerHTML=possible1[a];
+
     document.getElementsByClassName('dropdown-dropdown')[0].style.display="none";
     dropDownOpen=false;
     applySettings();
@@ -103,12 +113,6 @@ function init() {
     i+=2;
     ++j;
   }
-
-  //other!
-  newtab.defaultSet=function() {
-    document.getElementById("newtab-url").value="newtab";
-    newtab.dropDown.set(6);
-  }
 }
 
 function applySettings() {
@@ -120,10 +124,7 @@ function applySettings() {
 
   //update
 
-  else {
-    document.getElementById("newtab-url").style.display="inline";
-    localStorage['newtab-url']=newtab.type+newtab.prefix+newtab.url;
-  }
+  localStorage['newtab-url']=newtab.type+newtab.prefix+newtab.url;
 }
 var dropDownOpen=false;
 function toggleDropDown(t) {
