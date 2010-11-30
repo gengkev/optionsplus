@@ -1,0 +1,27 @@
+{
+"name": {
+	"message": "OptionsPlus",
+	"description": "The name of the extension."
+},
+"options": {
+	"message": " Options",
+	"description": "The word options"
+},
+"loading": {
+	"message": "Loading...",
+	"description": "The word loading"
+},
+"pleasewait": {
+	"message": "Please wait, redirecting..."
+},
+"notloading": {
+	"message": "Not loading? Click here to manually navigate to your selected New Tab page."
+},
+"description": {
+	"message": "An extension that offers more ways to customize Google Chrome.",
+	"description": "The extension's description."
+},
+"blankpage": {
+	"message": "Blank page"
+}
+}

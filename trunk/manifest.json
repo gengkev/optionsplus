@@ -1,0 +1,17 @@
+{
+  "name": "__MSG_name__",
+  "version": "0.0.3",
+
+  "description": "__MSG_description__",
+   "icons": { "16":  "files/16.png",
+              "48":  "files/48.png",
+              "128": "files/128.png" },
+
+  "default_locale": "en",
+
+  "chrome_url_overrides": {
+    "newtab": "redirect.htm"
+  },
+  "options_page": "options.htm",
+  "permissions": ["tabs", "history"]
+}
