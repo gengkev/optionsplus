@@ -1,0 +1,72 @@
+/*  OptionsPlus for Chrome: An extension that offers more ways to
+ *        customize Google Chrome.
+ *  Copyright (C) 2010 gengkev.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+body {
+  background-color:white;
+  color:black;
+  margin:10px;
+  font-size:87%;
+  font-family:Arial;
+}
+header {
+  overflow: auto;
+  clear: both;
+}
+header > img {
+  float:left;
+  width: 67px;
+  height: 67px;
+}
+header #title {
+  float:left;
+  margin-top:22px;
+  margin-left:12px;
+  font-size:156%;
+  font-weight:bold;
+}
+#description {
+  margin-top: 12px;
+  border-top: 1px solid #9cc2ef;
+  background-color: #ebeff9;
+  padding: 3px;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+article {
+  font-size:87%;
+}
+a {
+  color:blue;
+}
+div#savesettings {
+  position:fixed;
+  bottom:0px;
+  right:0px;
+  margin:15px;
+}
+div#savesettings > button {
+  width:75px;
+  text-align:center;
+}
+input[type=url] {
+  width:250px;
+}
+label > div {
+  margin-left:40px;
+  color:grey;
+}

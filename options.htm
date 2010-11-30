@@ -1,0 +1,219 @@
+<!--
+    OptionsPlus for Chrome: An extension that offers more ways to
+          customize Google Chrome.
+    Copyright (C) 2010 gengkev.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<!-- Note: be careful! This is a code *junkyard!*
+     I can't even read it well! :D
+     Especially all the nice dropdown code! (haha) -->
+
+<!DOCTYPE html>
+<title>OptionsPlus</title>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" href="files/extension.css" />
+<script type="application/javascript">
+// window.onunload=applySettings;
+window.addEventListener("load",init,false);
+window.addEventListener("change",applySettings,false);
+function init() {
+  // load in
+  window.newtab=new Object;
+  newtab.dropDown=new Object();
+  newtab.dropDown.selected="http://";
+  if(typeof(localStorage["newtab-url"])=="undefined")
+    localStorage['newtab-url']="0chrome-internal://newtab";
+  var uData=localStorage["newtab-url"].substring(1);
+  var uTest=uData.substring(0,uData.indexOf("://"));
+  if (uTest=="http"||uTest=="https"||uTest=="ftp"||uTest=="file"||uTest=="chrome"||uTest=="chrome-internal") {
+    newtab.url=uData.substring(uData.indexOf("://")+3);
+    newtab.dropDown.selected=uTest+"://";
+    document.getElementById('newtab-prefix-text').innerHTML=uTest+"://";
+  }
+  else if (uData=="blank.htm") {
+    newtab.url="";
+    newtab.dropDown.selected="blank.htm";
+    document.getElementById('newtab-prefix-text').innerHTML="Blank Page";
+    document.getElementById("newtab-url").style.display="none";
+  }
+  else if (uData=="chrome-internal://newtab") {
+    newtab.url="";
+    newtab.dropDown.selected="chrome-internal://newtab";
+    document.getElementById('newtab-prefix-text').innerHTML="New Tab Page";
+    document.getElementById("newtab-url").style.display="none";
+  }
+  else {
+    newtab.url=uData;
+    newtab.prefix="http://";
+  }
+  newtab.type=localStorage["newtab-url"].charAt(0);
+  newtab.type=(newtab.type==0)?false:true;
+
+  // update UI
+  document.getElementById("newtab-url").value=newtab.url;
+  document.getElementById("newtab-type").checked=newtab.type;
+
+  //dropdown!
+  document.body.addEventListener("click",function() {
+      if (dropDownOpen!==false) {
+        document.getElementsByClassName('dropdown-dropdown')[dropDownOpen].style.display="none";
+        dropDownOpen=false;
+      }
+  },true);
+
+  window.dropdowns=document.getElementsByClassName('dropdown');
+  for (i=0;i<dropdowns.length;i++) {
+    eval("dropdowns[i].addEventListener('click',function() { toggleDropDown("+i+")},true);");
+    // dr[i].addEventListener('click',function() { toggleDropDown(0)},false);
+    // dr[i].addEventListener('click',eval("function() { toggleDropDown("+i+")};"),false);
+  }
+  newtab.dropDown.set=function(a) {
+    var b=["http://","https://","ftp://","file://","chrome://","chrome-internal://","Blank Page","New Tab Page"];
+    if (a==7||a==8) {
+      document.getElementById("newtab-url").value="";
+      document.getElementById("newtab-url").style.display="none";
+    }
+    if (a==7)
+      
+    else if (a==8)
+      
+    newtab.dropDown.selected=b[a];
+    document.getElementById('newtab-prefix-text').innerHTML=b[a];
+    document.getElementsByClassName('dropdown-dropdown')[0].style.display="none";
+    dropDownOpen=false;
+    applySettings();
+  }
+  newtab.dropDown.items=document.getElementById('newtab-prefix-dropdown').childNodes;
+  //don't ask me why there is an actual element only every two entries in the array!
+  var i=1,j=0;
+  while(i<newtab.dropDown.items.length) {
+    eval("newtab.dropDown.items[i].addEventListener('click',function() { window.newtab.dropDown.set("+j+")},true);");
+    i+=2;
+    ++j;
+  }
+
+  //other!
+  newtab.defaultSet=function() {
+    document.getElementById("newtab-url").value="newtab";
+    newtab.dropDown.set(6);
+  }
+}
+
+function applySettings() {
+  //get values
+  newtab.prefix=newtab.dropDown.selected;
+  newtab.url=encodeURI(document.getElementById("newtab-url").value);
+  newtab.type=String(Number(document.getElementById("newtab-type").checked));
+
+
+  //update
+
+  else {
+    document.getElementById("newtab-url").style.display="inline";
+    localStorage['newtab-url']=newtab.type+newtab.prefix+newtab.url;
+  }
+}
+var dropDownOpen=false;
+function toggleDropDown(t) {
+  if (dropDownOpen!==t) {
+    document.getElementsByClassName('dropdown-dropdown')[t].style.display="block";
+    dropDownOpen=t;
+  }
+}
+</script>
+<style type="text/css">
+.dropdown-text {
+  font-size:13px;
+}
+.dropdown {
+  -webkit-appearance:textfield;
+  display:inline;
+  padding:5px;
+  cursor:pointer;
+  margin: 2px 0px;
+}
+.dropdown-dropdown {
+  position:absolute;
+  background-color:white;
+  margin:5px 0px 0px -4px;
+  padding:0;
+  display:none;
+  font-size:13px;
+}
+.dropdown-dropdown > div {
+  -webkit-appearance:listbox;
+  padding:5px;
+  margin:-1px;
+}
+.dropdown-dropdown > div:hover {
+  background-color:#bcf;
+}
+#newtab-url {
+  margin-left:-5px;
+  padding: 3px;
+}
+</style>
+<body>
+<header>
+  <img src="files/128.png" alt="OptionsPlus logo" title="OptionsPlus" id="logo" />
+  <div id="title">OptionsPlus for Chrome</div>
+</header>
+<div id="description">OptionsPlus Settings</div>
+<div class="group">
+  <h2>Tabs</h2>
+    <form name="newtab" action="javascript:void(0)"><fieldset><legend>New Tab Page</legend>
+    URL:
+    <div class="dropdown" id="newtab-prefix"><span class="dropdown-text" id="newtab-prefix-text">http://</span><span style="color:grey">&#9660;</span>
+    <div class="dropdown-dropdown" id="newtab-prefix-dropdown">
+    <div>http://</div>
+    <div>https://</div>
+    <div>ftp://</div>
+    <div>file://</div>
+    <div>chrome://</div>
+    <div>chrome-internal://</div>
+    <div>Blank Page</div>
+    <div>New Tab Page</div>
+    </div></div>
+    <input type="url" placeholder="Leave empty for new tab page" id="newtab-url" />
+    <span style="font-size:87%">
+    <input type="checkbox" id="newtab-type" /> Put focus on the page
+    </span> | <span style="font-size:87%">
+    <a href="javascript:void(0)" onclick="window.newtab.defaultSet()">Set as New Tab Page</a>
+    </span>
+    </fieldset></form>
+</div>
+<div class="group" rel="license">
+<h2>License</h2>
+<blockquote><code>
+    OptionsPlus for Chrome: An extension that offers more ways to<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;customize Google Chrome.<br />
+    Copyright (C) 2010 gengkev.<br /><br />
+
+    This program is free software: you can redistribute it and/or modify<br />
+    it under the terms of the GNU General Public License as published by<br />
+    the Free Software Foundation, either version 3 of the License, or<br />
+    (at your option) any later version.<br /><br />
+
+    This program is distributed in the hope that it will be useful,<br />
+    but WITHOUT ANY WARRANTY; without even the implied warranty of<br />
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<br />
+    GNU General Public License for more details.<br /><br />
+
+    You should have received <a href="license.txt">a copy of the GNU General Public License</a><br />
+    along with this program. If not, see &lt;<a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>&gt;.
+    
+</code></blockquote>
+</div>
+</body>
