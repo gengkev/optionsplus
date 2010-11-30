@@ -13,5 +13,6 @@
     "newtab": "redirect.htm"
   },
   "options_page": "options.htm",
-  "permissions": ["tabs", "history"]
+  "permissions": ["tabs", "history"],
+  "update_url": "http://optionsplus.googlecode.com/files/updates.xml"
 }
