@@ -2,7 +2,7 @@
 
 = Introduction =
 
-OptionsPlus offers more ways to customize Google Chrome.
+OptionsPlus offers more ways to customize Google Chrome. Are you tired of having your ideas WontFix'd by Chrome? This extension does, or will, implement many of those features.
 
 = Details =
 
