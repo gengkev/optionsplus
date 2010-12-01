@@ -1,0 +1,5 @@
+#summary Current version of OptionsPlus
+
+= Download =
+
+The current version is [downloads/0.0.5.crx Version 0.0.5].
