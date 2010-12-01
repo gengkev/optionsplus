@@ -2,4 +2,4 @@
 
 = Download =
 
-The current version is [downloads/0.0.5.crx Version 0.0.5].
+The current version is [http://optionsplus.googlecode.com/files/0.0.5.crx Version 0.0.5].
