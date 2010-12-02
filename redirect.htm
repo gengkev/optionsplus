@@ -8,7 +8,7 @@ chrome.tabs.getCurrent(function(tab){
 });
 </script>
 <meta charset="UTF-8" /><title>Loading...</title>
-<div style="font-family:Tahoma,serif;color:#666;text-align:center;margin-top:10%"><span id="p">Please wait, redirecting</span> <span id="d">.&nbsp;&nbsp;</span><br /><br /></div>
+<div style="font-family:Tahoma,serif;color:#666;text-align:center;margin-top:10%"><span id="p">Please wait, redirecting</span> <span id="d">...</span><br /><br /></div>
 <script type="application/javascript">
 document.title=chrome.i18n.getMessage("loading");
 document.getElementById("p").innerHTML=chrome.i18n.getMessage("pleasewait");
@@ -16,20 +16,24 @@ document.getElementById("p").innerHTML=chrome.i18n.getMessage("pleasewait");
 var dots=document.getElementById('d');
 function dotChange() {
   switch(dots.innerHTML) {
-    case ".&nbsp;&nbsp;":
-      dots.innerHTML="&nbsp;.&nbsp;";
+    case ".":
+      dots.innerHTML="..";
       break;
-    case "&nbsp;.&nbsp;":
-      dots.innerHTML="&nbsp;&nbsp;.";
+    case "..":
+      dots.innerHTML="...";
+      break;
+    case "...":
+      dots.innerHTML="";
       break;
     default:
-      dots.innerHTML=".&nbsp;&nbsp;";
+      dots.innerHTML=".";
   }
 }
+dotChange();
 var s=setInterval(dotChange,500);
 
 setTimeout(function() {
   var c=document.createTextNode(chrome.i18n.getMessage('notloading'));
   document.getElementById("p").parentNode.appendChild(c);
-},4550);
+},4500);
 </script>
